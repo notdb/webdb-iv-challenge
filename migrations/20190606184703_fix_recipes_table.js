@@ -1,4 +1,14 @@
 exports.up = function(knex, Promise) {
+  return knex.schema.hasTable("recipes").then(function(exists) {
+    if (exists) {
+      return knex.schema.table("recipes", function(table) {
+        table.string("recipeinstructions", 128);
+      });
+    }
+  });
+};
+
+exports.down = function(knex, Promise) {
   return knex.schema.createTable("recipes", function(table) {
     table.increments();
 
@@ -11,10 +21,5 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .references("id")
       .inTable("dish");
-    table.string("recipeinstructions", 128);
   });
-};
-
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("recipes");
 };
