@@ -13,6 +13,7 @@ exports.up = function(knex, Promise) {
       .references("id")
       .inTable("ingredients");
     table.integer("ingredient_amount").notNullable();
+    table.string("ingredient_size", 128);
   });
 };
 
